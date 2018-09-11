@@ -1,0 +1,20 @@
+{
+    "0000001" : {
+        "name": "Alejandro Garcia",
+        "phone": "0762082237",
+        "email": "92.alejandrogarcia@gmail.com",
+        "picture": "./public/img/alejandrogarcia000001.jpg"
+    },
+    "0000002" : {
+        "name": "Anna Faixová",
+        "phone": "0762082238",
+        "email": "anna.faixova@gmail.com",
+        "picture": "./public/img/annafaixova000002.jpg"
+    },
+    "0000003" : {
+        "name": "Elin Jakobson",
+        "phone": "0762082239",
+        "email": "elin.jakobson@gmail.com",
+        "picture": "./public/img/elinjakobson000003.jpg"
+    }
+}
