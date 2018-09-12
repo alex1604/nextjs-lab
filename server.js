@@ -4,6 +4,11 @@ const getContacts = require('./getContacts.js')
 const postContacts = require('./postContacts.js');
 const list = require ('./contacts.json');
 let reg = /[a-z]*/
+
+app.use((req,res,next) =>{
+    res.send('Hello, I am a server who has been called');
+    next();
+})
 app.get('/api' + reg, (req, res) => {
     res.send(getContacts.processGet(req, list));
 })
