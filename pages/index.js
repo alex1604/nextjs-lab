@@ -2,12 +2,13 @@ import React from 'react'
 import Link from 'next/link'
 import Head from '../components/head'
 import Nav from '../components/nav'
+import Sidebar from '../components/Sidebar'
 
 const Home = () => (
   <div>
     <Head title="Home" />
     <Nav />
-
+    <Sidebar/>
     <div className="hero">
       <h1 className="title">Welcome to Next!</h1>
       <p className="description">

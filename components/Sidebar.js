@@ -1,13 +1,12 @@
 import React from 'react'
 import {Header, Icon, Image, Segment, Sidebar, Menu } from 'semantic-ui-react'
-import './Sidebar.css';
-// import phoneLogo from './phoneLogo.png';
+// import phoneLogo from '../static/phoneLogo.png';
 
 const SidebarExampleVisible = () => (
   <Sidebar.Pushable as={Segment} className="sidebar">
-    <Sidebar as={Menu} animation='overlay' icon='labeled' inverted vertical visible width='thin'>
+    <Sidebar as={Menu} icon='labeled' inverted vertical visible width='thin'>
       <Menu.Item>
-        <Image src='./phoneLogo.png' />
+        <Image src='../static/phoneLogo.png' />
       </Menu.Item>
       <Menu.Item as='a'>
         <Icon name='home' />
@@ -28,7 +27,19 @@ const SidebarExampleVisible = () => (
         <p>hello</p>
       </Segment>
     </Sidebar.Pusher>
+    <style jsx> {`
+      .sidebar{
+        height: 100vh;
+        position: fixed;
+        }
+        p{
+          width:1vw;
+          font-size: 100px;
+          padding-right: 300px;
+        }
+      `}</style>
     </Sidebar.Pushable>
+
 )
 
 export default SidebarExampleVisible;
