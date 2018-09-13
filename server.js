@@ -1,29 +1,49 @@
 const express = require('express')
-const app = express()
+const next = require('next')
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler();
+
 const getContacts = require('./getContacts.js')
 const postContacts = require('./postContacts.js');
-const list = require ('./contacts.json');
-let reg = /[a-z]*/
-let regIsQuery = /?=[?]/
-let regNoQuery = /?![?]/
+const list = require('./contacts.json')
 
-app.use((req,res,next) =>{
-    res.send('Hello, I am a server who has been called');
-    next();
-})
-app.get('/api/:function' + regNoQuery, (req, res) => {
-    let functionName = req.params.function;
-    //res.send(getContacts[`${functionName}`](list));
-    res.send(getContacts.simpleMethod(functionName, list))
-});
-app.get('/api/search' + regIsQuery + reg, (req, res) => {
-    //res.send(getContacts.allContacts(req, list));
-    res.send(getContacts.searchMethod(req, list));
-})
+app.prepare()
+    .then(() => {
+        const server = express()
+    
+        /*server.use((req, res, next) => {
+            res.send('Hello, I am a server who has been called: ');
+            next()
+        })*/
 
-app.post('/api/registerNewContact', (req, res) => {
-    let newContact = req.body;
-    res.send(postContacts.procesPost(newContact, list)); 
-})
+        server.get('/api/search', (req, res) => {
+            let searchTerm = req.query.q;
+            res.send(getContacts.search(searchTerm, list));
+        })
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+        server.get('/api/simpleFilter/:function', (req, res) => {
+            let group = req.params.function;
+            res.send(getContacts.filter(group,list))  
+        });
+
+        /*server.post('/api/registerNewContact', (req, res) => {
+            let newContact = req.body;
+            res.send(postContacts.procesPost(newContact, list));
+        })*/
+
+        server.get('*', (req, res) => {
+            return handle(req, res)
+            
+        })
+
+        const port = 3000;
+        server.listen(port, (err) => {
+            if (err) throw err
+            console.log('> Ready on http://localhost:' + port)
+        })
+    })
+    .catch((ex) => {
+        console.error(ex.stack)
+        process.exit(1)
+    })

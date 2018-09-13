@@ -1,23 +1,21 @@
 module.exports = {
-    all : list => {
-        return JSON.stringify(list);
-    },
-    friends : list => {
+    filter: (group, list) => {
         //TODO:
-        return JSON.stringify(list);
+        if (group === 'all') return list
+        else {
+            let newList = [];
+            list.forEach(x => {
+                if (x.group === group) newList.push(x)
+            })
+            return JSON.stringify(newList);
+        }
     },
-    family : list => {
-        //TODO:
-        return JSON.stringify(list);
-    },
-    simpleMethod : (functionName, list) => {
-        this[`${functionName}`](list);
-    },
-    searchMethod : (req, list) => {
-        // Fri sök ('/api/search?q=') skickas med requesten:
-        // all queries must be format 'q=searchTerm'
-        let queryTerm = req.query.q;
-        // Not sure this code below works, remains to test:
-        return JSON.parse(list).filter((x) => x === queryTerm);
-    },
+    search: (searchTerm, list) =>{
+        let newList = [];
+        list.forEach(x => 
+            Object.values(x).find( prop => prop.includes(searchTerm)) ?
+            newList.push(x) : null
+        );
+        return newList;
+    }
 }
