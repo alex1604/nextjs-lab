@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import Head from '../components/head'
 import Sidebar from '../components/Sidebar'
 import { Button, Icon, Image, Item, Label, Modal } from 'semantic-ui-react'
+import 'isomorphic-unfetch'
 
 const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
 
 class ContactList extends Component{
-  state = { open: false }
+  constructor(props) {
+    super(props)
+}
 
+  state = { open: false }
     open = () => this.setState({open: true })
     close = () => this.setState({ open: false })
 
@@ -17,19 +21,20 @@ class ContactList extends Component{
     return (<div>
       <Head title="ContactList" />
       <Sidebar/>
-      <Item.Group divided>
-        <Item>
+      <ul>
+      <Item.Group divided >
+      {this.props.contact.map(contact => (
+          <Item key={contact.id}>
           <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-
           <Item.Content>
-            <Item.Header>Name</Item.Header>
+            <Item.Header>{contact.firstName} {contact.lastName}</Item.Header>
             <Item.Meta>
-              <span className='cinema'>Group</span>
+              <span className='cinema'>{contact.group}</span>
             </Item.Meta>
             <Item.Description>
-              70673267123
+              {contact.phone}
               <br/>
-              jon.doe@email.com
+              {contact.email}
             </Item.Description>
             <Item.Extra>
             <Button color="green" floated='right' icon labelPosition='left'>
@@ -40,10 +45,14 @@ class ContactList extends Component{
                 Delete
                 <Icon name='trash alternate outline' />
               </Button>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
-      </Item.Group>
+              </Item.Extra>
+            </Item.Content>
+          </Item>
+
+        ))}
+        </Item.Group>
+        </ul>
+
 
       <Modal size="tiny" open={open} onClose={this.close}>
               <Modal.Header>Delete Contact</Modal.Header>
@@ -57,6 +66,17 @@ class ContactList extends Component{
             </Modal>
       </div>)
     }
+}
+ContactList.getInitialProps = async function() {
+  const res = await fetch('http://localhost:3000/api/simpleFilter/all')
+  const data = await res.json()
+
+  console.log(`Show data fetched. Count: ${data.length}`);
+  console.log(data);
+
+  return {
+    contact: data
+  }
 }
 
 export default ContactList
