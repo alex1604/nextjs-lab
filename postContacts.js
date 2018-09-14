@@ -15,17 +15,30 @@ module.exports = {
         }
         )
         */
-    processPost : function (req, list){
-        let newContact = req.body;
+    processPost : function (newContact, list){
         let result;
+        let newContact = newContact;
         try {
             /*
-            write new json contact object
+            let userArray = JSON.parse(list);
+            let numberOfUsers = userArray.length;
+            newContact[id] = numberOfUsers + 1;
+            userArray.push(newContact);
 
-            if success => result = '200'
+            Rewrite contact list => 
+            fs.createWriteStream('./contacts.json',
+            JSON.stringify(userArray), {flags: 'w'});
+
+            if success => result = {
+                "status": '400',
+                "message": 'Operation was successful'
+            };
             */
         } catch {
-            result = '500';
+            result = {
+                "status": '500',
+                "message": 'Internal Server Error'
+            };
         } finally {
             return result
         }

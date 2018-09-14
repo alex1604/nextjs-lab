@@ -1,0 +1,35 @@
+TO GET CONTACTS BY GROUP:
+
+all contacts:
+    'http://localhost:3000/api/simpleFilter/all'
+
+friends:
+    'http://localhost:3000/api/simpleFilter/friends'
+
+family: 
+    'http://localhost:3000/api/simpleFilter/family'
+
+work:
+    'http://localhost:3000/api/simpleFilter/work'
+
+
+TO MAKE AN OPEN SEARCH IN THE AGENDA:
+
+    'http://localhost:3000/api/search/q=' + search word
+
+
+TO SAVE A NEW CONTACT:
+
+    fetch('http://localhost:3000/api/registerNewContact',
+        {
+            method: 'POST',
+            body: {
+                "firstName": "Elin",
+                "lastName": "Jakobsson"
+                "phone": "0762082239",
+                "email": "elin.jakobson@gmail.com",
+                "group": "friends",
+                "picture": "./public/img/elinjakobson000003.jpg"
+            }
+        }
+        )

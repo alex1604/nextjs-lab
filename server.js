@@ -1,18 +1,49 @@
 const express = require('express')
-const app = express()
+const next = require('next')
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler();
+
 const getContacts = require('./getContacts.js')
 const postContacts = require('./postContacts.js');
-const list = require ('./contacts.json');
-let reg = /[a-z]*/
-app.get('/api' + reg, (req, res) => {
-    res.send(getContacts.processGet(req, list));
-})
+const list = require('./contacts.json')
 
-app.post('/api/registerNewContact', (req, res) => {
-    res.send(postContacts.procesPost(req, list)); 
-    /* returnerar '500' om internal server error eller '200'
-    om den lyckades spara nya kontakten
-    */
-})
+app.prepare()
+    .then(() => {
+        const server = express()
+    
+        /*server.use((req, res, next) => {
+            res.send('Hello, I am a server who has been called: ');
+            next()
+        })*/
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+        server.get('/api/search', (req, res) => {
+            let searchTerm = req.query.q;
+            res.send(getContacts.search(searchTerm, list));
+        })
+
+        server.get('/api/simpleFilter/:function', (req, res) => {
+            let group = req.params.function;
+            res.send(getContacts.filter(group,list))  
+        });
+
+        /*server.post('/api/registerNewContact', (req, res) => {
+            let newContact = req.body;
+            res.send(postContacts.procesPost(newContact, list));
+        })*/
+
+        server.get('*', (req, res) => {
+            return handle(req, res)
+            
+        })
+
+        const port = 3000;
+        server.listen(port, (err) => {
+            if (err) throw err
+            console.log('> Ready on http://localhost:' + port)
+        })
+    })
+    .catch((ex) => {
+        console.error(ex.stack)
+        process.exit(1)
+    })
