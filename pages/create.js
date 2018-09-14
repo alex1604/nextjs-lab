@@ -6,17 +6,12 @@ import MainMenu from '../components/MainMenu'
 import CreateContactForm from '../components/createContactForm'
 import ContactList from '../components/list'
 
-// const bodyWrapper ={
-//   width: "100%",
-//   margin: "auto"
-// }
-
-const Home = () => (
+const Create = () => (
   <div>
-    <Head title="Home" />
+    <Head title="Create" />
     <MainMenu/>
-    <ContactList/>
+    <CreateContactForm/>
   </div>
 )
 
-export default Home
+export default Create

@@ -1,23 +1,25 @@
 import React from 'react'
 import Head from '../components/head'
 import { Form, Button, Header, Icon } from 'semantic-ui-react'
+import Link from 'next/link'
 
-const contactWrapperStyle = {
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  alignContent: "center"
-
-}
+// const contactWrapperStyle = {
+//   width: "100%",
+//   height: "100vh",
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   alignContent: "center"
+//
+// }
 const formStyle = {
   backgroundColor: "#f4f4f4",
   borderRadius: "10px",
   width: "80%",
   height: "80%",
   padding: "2rem",
-  boxShadow: "0 0 30px rgba(0, 0, 0, 0.2)"
+  boxShadow: "0 0 30px rgba(0, 0, 0, 0.2)",
+  margin: "auto"
 }
 
 class CreateContactForm extends React.Component{
@@ -39,7 +41,7 @@ class CreateContactForm extends React.Component{
   render(){
 
   return(
-  <div style={contactWrapperStyle}>
+  <div>
   <Form style={formStyle} >
     <Head title="CreateContactForm" />
 
@@ -89,7 +91,9 @@ class CreateContactForm extends React.Component{
         onChange={(e) => this.setState({email:e.target.value})}/>
     </Form.Field>
     <Button type='submit' color='green' onClick={this.saveContact}>Submit</Button>
+    <Link href="index">
     <Button basic color='red' onClick={()=> console.log("cancel")}>Cancel</Button>
+    </Link>
    </Form>
    </div>
  )
