@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Head from '../components/head'
 import MainMenu from '../components/MainMenu'
 import { Button, Icon, Image, Item, Label, Modal } from 'semantic-ui-react'
+import 'isomorphic-unfetch'
 
 const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
 const listWrapper = {
@@ -13,31 +14,34 @@ const listWrapper = {
 }
 
 class ContactList extends Component{
-  state = { open: false }
+  constructor(props) {
+    super(props)
+}
 
+  state = { open: false }
     open = () => this.setState({open: true })
     close = () => this.setState({ open: false })
 
   render(){
     const {open} = this.state
-
+    console.log("props ", this.props);
     return (<div>
       <Head title="ContactList" />
-
+      <MainMenu/>
       <div style={listWrapper}>
-      <Item.Group divided>
-        <Item>
+      <Item.Group divided >
+      {this.props.contact.map(contact => (
+          <Item key={contact.id}>
           <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-
           <Item.Content>
-            <Item.Header>Name</Item.Header>
+            <Item.Header>{contact.firstName} {contact.lastName}</Item.Header>
             <Item.Meta>
-              <span className='cinema'>Group</span>
+              <span className='cinema'>{contact.group}</span>
             </Item.Meta>
             <Item.Description>
-              70673267123
+              {contact.phone}
               <br/>
-              jon.doe@email.com
+              {contact.email}
             </Item.Description>
             <Item.Extra>
             <Button color="green" floated='right' icon labelPosition='left'>
@@ -48,37 +52,14 @@ class ContactList extends Component{
                 Delete
                 <Icon name='trash alternate outline' />
               </Button>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
+              </Item.Extra>
+            </Item.Content>
+          </Item>
 
-        <Item>
-          <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+        ))}
+        </Item.Group>
+        </div>
 
-          <Item.Content>
-            <Item.Header>Name</Item.Header>
-            <Item.Meta>
-              <span className='cinema'>Group</span>
-            </Item.Meta>
-            <Item.Description>
-              70673267123
-              <br/>
-              jon.doe@email.com
-            </Item.Description>
-            <Item.Extra>
-            <Button color="green" floated='right' icon labelPosition='left'>
-              Edit
-              <Icon name='edit' />
-            </Button>
-              <Button onClick={this.open} color="red" floated='right' icon labelPosition='left'>
-                Delete
-                <Icon name='trash alternate outline' />
-              </Button>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
-      </Item.Group>
-      </div>
 
       <Modal size="tiny" open={open} onClose={this.close}>
               <Modal.Header>Delete Contact</Modal.Header>
@@ -92,6 +73,17 @@ class ContactList extends Component{
             </Modal>
       </div>)
     }
+}
+ContactList.getInitialProps = async function() {
+  const res = await fetch('http://localhost:3000/api/simpleFilter/all')
+  const data = await res.json()
+
+  console.log(`Show data fetched. Count: ${data.length}`);
+  console.log(data);
+
+  return {
+    contact: data
+  }
 }
 
 export default ContactList

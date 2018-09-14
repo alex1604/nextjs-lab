@@ -16,7 +16,7 @@ const formStyle = {
   backgroundColor: "#f4f4f4",
   borderRadius: "10px",
   width: "80%",
-  height: "80%",
+  height: "90%",
   padding: "2rem",
   boxShadow: "0 0 30px rgba(0, 0, 0, 0.2)",
   margin: "auto"
@@ -30,12 +30,13 @@ class CreateContactForm extends React.Component{
         lastName:'',
         phone: '',
         email: '',
+        picture:'',
       }
   }
 
 
   saveContact = () => {
-    console.log(this.state);
+      console.log(this.state);
     //TODO callback to save data in json
   }
   render(){
@@ -90,6 +91,7 @@ class CreateContactForm extends React.Component{
         value={this.state.email}
         onChange={(e) => this.setState({email:e.target.value})}/>
     </Form.Field>
+
     <Button type='submit' color='green' onClick={this.saveContact}>Submit</Button>
     <Link href="index">
     <Button basic color='red' onClick={()=> console.log("cancel")}>Cancel</Button>

@@ -4,7 +4,7 @@ import Head from '../components/head'
 import Nav from '../components/nav'
 import MainMenu from '../components/MainMenu'
 import CreateContactForm from '../components/createContactForm'
-import ContactList from '../components/list'
+// import ContactList from '../components/list'
 
 const Create = () => (
   <div>

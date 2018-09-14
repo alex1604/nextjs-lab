@@ -16,6 +16,6 @@ module.exports = {
             Object.values(x).find( prop => prop.includes(searchTerm)) ?
             newList.push(x) : null
         );
-        return newList;
+        return JSON.stringify(newList);
     }
 }
