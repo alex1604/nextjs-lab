@@ -1,47 +1,47 @@
 [
-    {
-        "id": "1000001" ,
-        "firstName": "Alejandro",
-        "lastName": "Garcia",
-        "phone": "0762082237",
-        "email": "92.alejandrogarcia@gmail.com",
-        "group": "friends",
-        "picture": "/static/user_images/kitten4.jpg"
-    },
-    {
-        "id": "1000002",
-        "firstName": "Anna",
-        "lastName": "Faixová",
-        "phone": "0762082238",
-        "email": "anna.faixova@gmail.com",
-        "group": "friends",
-        "picture": "/static/user_images/kitten1.jpg"
-    },
-    {
-        "id": "1000003",
-        "firstName": "Elin",
-        "lastName": "Jakobsson",
-        "phone": "0762082239",
-        "email": "elin.jakobson@gmail.com",
-        "group": "friends",
-        "picture": "/static/user_images/kitten3.jpg"
-    },
-    {
-        "id": "1000004",
-        "firstName": "Donald",
-        "lastName": "Trump",
-        "phone": "0762082240",
-        "email": "donald.trump@gmail.com",
-        "group": "family",
-        "picture": "static/user_images/kitten2.jpg"
-    },
-    {
-        "id": "1000005",
-        "firstName": "Kim-Jong",
-        "lastName": "Un",
-        "phone": "0762082241",
-        "email": "kim.kom.kung@gmail.com",
-        "group": "family",
-        "picture": "static/user_images/kitten4.jpg"
-    }
+  {
+    "id": "1000001",
+    "firstName": "Alejandro",
+    "lastName": "Garcia",
+    "phone": "0762082237",
+    "email": "92.alejandrogarcia@gmail.com",
+    "group": "friends",
+    "picture": "/static/user_images/AlejandroGarcia1000001.jpg"
+  },
+  {
+    "id": "1000002",
+    "firstName": "Anna",
+    "lastName": "Faixová",
+    "phone": "0762082238",
+    "email": "anna.faixova@gmail.com",
+    "group": "friends",
+    "picture": "/static/user_images/kitten1.jpg"
+  },
+  {
+    "id": "1000003",
+    "firstName": "Elin",
+    "lastName": "Jakobsson",
+    "phone": "0762082239",
+    "email": "elin.jakobson@gmail.com",
+    "group": "friends",
+    "picture": "/static/user_images/kitten3.jpg"
+  },
+  {
+    "id": "1000004",
+    "firstName": "Donald",
+    "lastName": "Trump",
+    "phone": "0762082240",
+    "email": "donald.trump@gmail.com",
+    "group": "family",
+    "picture": "static/user_images/kitten2.jpg"
+  },
+  {
+    "id": "1000005",
+    "firstName": "Kim-Jong",
+    "lastName": "Un",
+    "phone": "0762082241",
+    "email": "kim.kom.kung@gmail.com",
+    "group": "family",
+    "picture": "static/user_images/kitten4.jpg"
+  }
 ]

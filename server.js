@@ -9,7 +9,7 @@ const fs = require('fs');
 const http = require('http');
 
 const getContacts = require('./getContacts.js')
-//const postContacts = require('./postContacts.js');
+const postContact = require('./postContact.js');
 const list = require('./contacts.json')
 
 app.prepare()
@@ -45,23 +45,32 @@ app.prepare()
         server.post('/api/registerNewContact',
 
             upload.single("userPhoto"), (req, res) => {
+                console.log(req.body);
+                let newUser = postContact.newContact(req.body,list);
+                let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
 
                 const tempPath = req.file.path;
-                console.log(req.file.path);
-                const targetPath = path.join(__dirname, "./static/user_images/AlejandroGarcia1000001.jpg");
+                const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
 
                 if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
                     fs.rename(tempPath, targetPath, err => {
                         if (err) return handleError(err, res);
 
+                        newUser.picture = "./static/user_images/" + newUserId + ".jpg";
+                        console.log(newUser);
+                        list.push(newUser);
+                        postContact.writeUser(list);
 
                         // function that registers the rest of the data
                         res
                             .status(200)
                             .contentType("text/plain")
-                            .end("File uploaded!");
+                            .end("New contact added");
                     });
                 } else {
+                    newUser.picture = "./static/user_images/defaultUser.jpg";
+                    list.push(newUser);
+                    postContacts.writeUser(list);
                     fs.unlink(tempPath, err => {
                         if (err) return handleError(err, res);
 
