@@ -24,15 +24,14 @@ class ContactList extends Component{
 
   render(){
     const {open} = this.state
-    console.log("props ", this.props);
+    // console.log("props ", this.props.deleteAction);
     return (<div>
       <Head title="ContactList" />
-      <MainMenu/>
       <div style={listWrapper}>
       <Item.Group divided >
-      {this.props.contact.map(contact => (
+      {this.props.data.contact.map(contact => (
           <Item key={contact.id}>
-          <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          <Item.Image src={contact.picture ? contact.picture: "/static/user_images/defaultUser.jpg"} />
           <Item.Content>
             <Item.Header>{contact.firstName} {contact.lastName}</Item.Header>
             <Item.Meta>
@@ -60,7 +59,6 @@ class ContactList extends Component{
         </Item.Group>
         </div>
 
-
       <Modal size="tiny" open={open} onClose={this.close}>
               <Modal.Header>Delete Contact</Modal.Header>
               <Modal.Content>
@@ -74,16 +72,16 @@ class ContactList extends Component{
       </div>)
     }
 }
-ContactList.getInitialProps = async function() {
-  const res = await fetch('http://localhost:3000/api/simpleFilter/all')
-  const data = await res.json()
-
-  console.log(`Show data fetched. Count: ${data.length}`);
-  console.log(data);
-
-  return {
-    contact: data
-  }
-}
+// ContactList.getInitialProps = async function() {
+//   const res = await fetch('http://localhost:3000/api/simpleFilter/all')
+//   const data = await res.json()
+//
+//   console.log(`Show data fetched. Count: ${data.length}`);
+//   console.log(data);
+//
+//   return {
+//     contact: data
+//   }
+// }
 
 export default ContactList
