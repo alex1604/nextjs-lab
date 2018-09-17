@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
 import Head from '../components/head'
-import Sidebar from '../components/Sidebar'
+import MainMenu from '../components/MainMenu'
 import { Button, Icon, Image, Item, Label, Modal } from 'semantic-ui-react'
 import 'isomorphic-unfetch'
 
 const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+const listWrapper = {
+  width: "80%",
+  backgroundColor: "#f4f4f4",
+  borderRadius: "10px",
+  padding: '2rem',
+  margin: "auto"
+}
 
 class ContactList extends Component{
   constructor(props) {
@@ -17,15 +24,14 @@ class ContactList extends Component{
 
   render(){
     const {open} = this.state
-
+    // console.log("props ", this.props.deleteAction);
     return (<div>
       <Head title="ContactList" />
-      <Sidebar/>
-      <ul>
+      <div style={listWrapper}>
       <Item.Group divided >
-      {this.props.contact.map(contact => (
+      {this.props.data.contact.map(contact => (
           <Item key={contact.id}>
-          <Item.Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          <Item.Image src={contact.picture ? contact.picture: "/static/user_images/defaultUser.jpg"} />
           <Item.Content>
             <Item.Header>{contact.firstName} {contact.lastName}</Item.Header>
             <Item.Meta>
@@ -51,8 +57,7 @@ class ContactList extends Component{
 
         ))}
         </Item.Group>
-        </ul>
-
+        </div>
 
       <Modal size="tiny" open={open} onClose={this.close}>
               <Modal.Header>Delete Contact</Modal.Header>
@@ -60,23 +65,23 @@ class ContactList extends Component{
                 <p>Are you sure you want to delete this contact</p>
               </Modal.Content>
               <Modal.Actions>
-                <Button onClick={this.open}  negative>No</Button>
+                <Button onClick={this.close}  negative>No</Button>
                 <Button positive icon='checkmark' labelPosition='right' content='Yes' />
               </Modal.Actions>
             </Modal>
       </div>)
     }
 }
-ContactList.getInitialProps = async function() {
-  const res = await fetch('http://localhost:3000/api/simpleFilter/all')
-  const data = await res.json()
-
-  console.log(`Show data fetched. Count: ${data.length}`);
-  console.log(data);
-
-  return {
-    contact: data
-  }
-}
+// ContactList.getInitialProps = async function() {
+//   const res = await fetch('http://localhost:3000/api/simpleFilter/all')
+//   const data = await res.json()
+//
+//   console.log(`Show data fetched. Count: ${data.length}`);
+//   console.log(data);
+//
+//   return {
+//     contact: data
+//   }
+// }
 
 export default ContactList

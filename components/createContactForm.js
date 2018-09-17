@@ -1,23 +1,16 @@
 import React from 'react'
 import Head from '../components/head'
-import { Form, Button, Header, Icon } from 'semantic-ui-react'
+import { Form, Button, Header, Icon, Label } from 'semantic-ui-react'
+import Link from 'next/link'
 
-const contactWrapperStyle = {
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  alignContent: "center"
-
-}
 const formStyle = {
   backgroundColor: "#f4f4f4",
   borderRadius: "10px",
   width: "80%",
   height: "90%",
   padding: "2rem",
-  boxShadow: "0 0 30px rgba(0, 0, 0, 0.2)"
+  boxShadow: "0 0 30px rgba(0, 0, 0, 0.2)",
+  margin: "auto"
 }
 
 class CreateContactForm extends React.Component{
@@ -28,10 +21,9 @@ class CreateContactForm extends React.Component{
         lastName:'',
         phone: '',
         email: '',
-        picture:'',
+        picture:'/static/user_images/defaultUser.jpg',
       }
   }
-
 
   saveContact = () => {
       console.log(this.state);
@@ -40,8 +32,8 @@ class CreateContactForm extends React.Component{
   render(){
 
   return(
-  <div style={contactWrapperStyle}>
-  <Form style={formStyle} >
+  <div>
+  <Form encType='multipart/form-data' method='post' style={formStyle} >
     <Head title="CreateContactForm" />
 
     <Header as='h2' dividing>
@@ -60,6 +52,7 @@ class CreateContactForm extends React.Component{
         value={this.state.firstName}
         onChange={(e) => this.setState({firstName:e.target.value})}/>
     </Form.Field>
+
     <Form.Field>
       <label>Lastname</label>
       <input
@@ -68,11 +61,28 @@ class CreateContactForm extends React.Component{
         value={this.state.lastName}
         onChange={(e) => this.setState({lastName:e.target.value})}/>
     </Form.Field>
+
+    <div style={{margin:"2rem 0 0 0"}}>
+      <label
+        htmlFor="triggerPhotoInput"
+        className="ui icon button">
+        <Icon name='upload'/>Upload image
+      </label>
+      <input
+        type="file"
+        id="triggerPhotoInput"
+        name="picture"
+        onChange={(e) => this.setState({picture:e.target.value})}
+        style={{display: "none"}}/>
+    </div>
+    <p style={{margin:"2rem 0 0 0"}}> {this.state.picture}</p>
+
     <br/>
     <Header as='h3' dividing>
       Contact information
     </Header>
     <br/>
+
     <Form.Field>
       <label>Phone number</label>
       <input
@@ -81,6 +91,7 @@ class CreateContactForm extends React.Component{
         value={this.state.phone}
         onChange={(e) => this.setState({phone:e.target.value})}/>
     </Form.Field>
+
     <Form.Field>
       <label>Email</label>
       <input
@@ -90,8 +101,11 @@ class CreateContactForm extends React.Component{
         onChange={(e) => this.setState({email:e.target.value})}/>
     </Form.Field>
 
+
     <Button type='submit' color='green' onClick={this.saveContact}>Submit</Button>
+    <Link href="index">
     <Button basic color='red' onClick={()=> console.log("cancel")}>Cancel</Button>
+    </Link>
    </Form>
    </div>
  )

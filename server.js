@@ -31,7 +31,7 @@ app.prepare()
             next()
         })*/
         server.get("/", express.static(path.join(__dirname, "./components")));
-        
+
         server.get('/api/search', (req, res) => {
             let searchTerm = req.query.q;
             res.send(getContacts.search(searchTerm, list));
@@ -43,7 +43,9 @@ app.prepare()
         });
 
         server.post('/api/registerNewContact',
+
             upload.single("userPhoto"), (req, res) => {
+
                 const tempPath = req.file.path;
                 console.log(req.file.path);
                 const targetPath = path.join(__dirname, "./static/user_images/AlejandroGarcia1000001.jpg");
@@ -52,6 +54,8 @@ app.prepare()
                     fs.rename(tempPath, targetPath, err => {
                         if (err) return handleError(err, res);
 
+
+                        // function that registers the rest of the data
                         res
                             .status(200)
                             .contentType("text/plain")
