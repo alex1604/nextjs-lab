@@ -3,7 +3,7 @@ module.exports = {
     newContact: (object, list) => {
         let newUserNumericValue = 1000000 + (list.length + 1);
         //let newUserUniqueId = object.firstName.replace(' ', '%20') + object.lastName.replace(' ', '%20') + newUserNumericValue.toString();
-        object["id"] = newUserNumericValue;
+        object["id"] = newUserNumericValue.toString();
         let newObject = {
             "id": object.id,
             "firstName": object.firstName,
