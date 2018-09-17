@@ -45,6 +45,7 @@ app.prepare()
         server.post('/api/registerNewContact',
             upload.single("userPhoto"), (req, res) => {
                 const tempPath = req.file.path;
+                console.log(req.file.path);
                 const targetPath = path.join(__dirname, "./static/user_images/AlejandroGarcia1000001.jpg");
 
                 if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
