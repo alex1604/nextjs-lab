@@ -97,7 +97,6 @@ app.prepare()
 
         server.get('*', (req, res) => {
             return handle(req, res)
-
         })
 
         const port = 3000;

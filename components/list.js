@@ -24,8 +24,11 @@ class ContactList extends Component{
 
     selectContact = contactId => {
 		this.setState({ selectedContact: contactId });
-
+    console.log(contactId);
   }
+    cancelEdit = () => {
+      this.setState({selectedContact: ""});
+    }
   // deleteItem = (id) => {
   //
   //   let res = await fetch( this.props.url +"/api?mode=deleteItem&id="+id)
@@ -40,7 +43,7 @@ class ContactList extends Component{
     const list = this.props.data.map(contact => {
       if(this.state.selectedContact === contact){
         return (
-            <EditContact contact={contact} handleChange={this.changeContact} key={contact.id}/>
+            <EditContact cancel={this.cancelEdit} contact={contact} handleChange={this.changeContact} key={contact.id}/>
         )
       }else{
 
