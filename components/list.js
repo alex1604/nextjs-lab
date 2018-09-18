@@ -25,13 +25,19 @@ class ContactList extends Component{
     selectContact = contactId => {
 		this.setState({ selectedContact: contactId });
 
-	}
+  }
+  // deleteItem = (id) => {
+  //
+  //   let res = await fetch( this.props.url +"/api?mode=deleteItem&id="+id)
+  //   if(res.??) ta bort element från state    state.items.filter
+  // }
+
     // changeContact = (contact, newContactInfo)=> {
     //   console.log(newContactInfo);
     // }
   render(){
     const {open} = this.state;
-    const list = this.props.data.contact.map(contact => {
+    const list = this.props.data.map(contact => {
       if(this.state.selectedContact === contact){
         return (
             <EditContact contact={contact} handleChange={this.changeContact} key={contact.id}/>

@@ -6,44 +6,61 @@ import MainMenu from '../components/MainMenu'
 import CreateContactForm from '../components/createContactForm'
 import ContactList from '../components/list'
 
+const firstFetchUrl = 'http://localhost:3000';
+
 class Home extends React.Component{
+
+  static async getInitialProps () {
+        const res = await fetch(firstFetchUrl + '/api/simpleFilter/all')
+        const data = await res.json()
+        console.log(`Show data fetched. Count: ${data.length}`);
+        console.log(data);
+
+        return {
+          contact: data
+        }
+    }
+
   constructor(props){
     super(props);
-    this.state={
-      initialValue: "initial"
-    }
+      this.state={
+        finalRender: this.props.contact,
+        url: firstFetchUrl
+      }
   }
-  login = (email) => {
-    console.log(email);
+
+  update = (newData) => {
+    this.setState({finalRender: newData});
   }
   hello = (hello) => {
     console.log(hello)
   }
 
+
+
   render(){
-
-
     return (
       <div>
         <Head title="Home" />
-        <MainMenu hello={this.hello}/>
+        <MainMenu update={this.update} data={this.state.finalRender}/>
+        <ContactList url={firstFetchUrl} update={this.update} data={this.state.finalRender}/>
       </div>)
   }
 }
 // const Home = (props) => (
 //
 // )
-MainMenu.getInitialProps = async function() {
-  const res = await fetch('http://localhost:3000/api/simpleFilter/all')
-  const data = await res.json()
-
-  // console.log(`Show data fetched. Count: ${data.length}`);
-  // console.log(data);
-
-  return {
-    contact: data
-  }
-}
+// Home.getInitialProps = async function() {
+//   const res = await fetch('http://localhost:3000/api/simpleFilter/all')
+//   const data = await res.json()
+//
+//   console.log(`Show data fetched. Count: ${data.length}`);
+//   console.log(data);
+//
+//   return {
+//     contact: data
+//   }
+// }
 
 // Home.getInitialProps = async function() {
 //   const res = await fetch('http://localhost:3000/api/simpleFilter/' + {this.state.filter}).then(function(response){
