@@ -7,10 +7,13 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
-const getContacts = require('./getContacts.js')
+const getContacts = require('./getContacts.js');
 const postContact = require('./postContact.js');
-const list = require('./contacts.json')
+const searchById = require('./searchById');
+const list = require('./contacts.json');
 
 app.prepare()
     .then(() => {
@@ -45,7 +48,7 @@ app.prepare()
         server.post('/api/registerNewContact',
 
             upload.single("userPhoto"), (req, res) => {
-                console.log(req.body);
+                console.log(req);
                 let newUser = postContact.newContact(req.body,list);
                 let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
 
@@ -81,6 +84,15 @@ app.prepare()
                     });
                     //res.send(postContacts.procesPost(req, res, newContact, list));
                 }
+            })
+        
+            server.get('/api/editContact/:id', urlencodedParser,
+                (req, res) => {
+                    console.log(req.params.id);
+                    //res.send(req.body);
+                    let searchId = req.params.id;
+                    let body = req.query;
+                    res.send(searchById.thisId(searchId, body, list));
             })
 
         server.get('*', (req, res) => {

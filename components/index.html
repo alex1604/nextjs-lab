@@ -1,26 +1,21 @@
 <html>
 <head><title>TEST FORM</title>
-<script>
-    var callback = function(){
-        /*let button = document.getElementById('test-send');
-        button.addEventListener('click', ()=>{
-
-        })*/
-    }
-    window.addEventListener('load', callback);
-</script>
 </head>
 <body>
-    <form action='http://localhost:3000/api/registerNewContact'
-        enctype='multipart/form-data'
-        method='post'>
-        <input type="file" name="userPhoto"/>
+    <form action="http://localhost:3000/api/editContact/1000001"
+        method='get'>
+        <!-- 
+            NEW CONTACT: 
+            method='post'
+            enctype='multipart/form- data'
+        -->
+        <!--<input type="file" name="userPhoto"/>-->
         <input type="text" name="firstName"/>
         <input type="text" name="lastName"/>
         <input type="text" name="email"/>
         <input type="text" name="phone"/>
         <input type="text" name="group"/>
-        <input type="submit" id='test-send'/>
+        <input type="submit"/>
     </form>
 </body>
 </html>

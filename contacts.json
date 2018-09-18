@@ -2,9 +2,9 @@
   {
     "id": "1000001",
     "firstName": "Alejandro",
-    "lastName": "Garcia",
-    "phone": "0762082237",
-    "email": "92.alejandrogarcia@gmail.com",
+    "lastName": "Garcia Granado",
+    "phone": "92.alejandrogarcia@gmail.com",
+    "email": "0762082237",
     "group": "friends",
     "picture": "/static/user_images/AlejandroGarcia1000001.jpg"
   },

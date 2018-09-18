@@ -16,6 +16,9 @@ class Home extends React.Component{
   login = (email) => {
     console.log(email);
   }
+  hello = (hello) => {
+    console.log(hello)
+  }
 
   render(){
 
@@ -23,15 +26,14 @@ class Home extends React.Component{
     return (
       <div>
         <Head title="Home" />
-        <MainMenu/>
-        <ContactList login={this.login} deleteAction="delete" data={this.props}/>
+        <MainMenu hello={this.hello}/>
       </div>)
   }
 }
 // const Home = (props) => (
 //
 // )
-Home.getInitialProps = async function() {
+MainMenu.getInitialProps = async function() {
   const res = await fetch('http://localhost:3000/api/simpleFilter/all')
   const data = await res.json()
 
