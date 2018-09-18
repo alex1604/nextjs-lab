@@ -17,19 +17,24 @@ class ContactList extends Component{
   constructor(props) {
     super(props)
 }
-
   state = { open: false }
     open = () => this.setState({open: true })
     close = () => this.setState({ open: false })
 
+  // deleteItem = (id) => {
+  //
+  //   let res = await fetch( this.props.url +"/api?mode=deleteItem&id="+id)
+  //   if(res.??) ta bort element från state    state.items.filter
+  // }
+
   render(){
     const {open} = this.state
-    // console.log("props ", this.props.deleteAction);
+
     return (<div>
       <Head title="ContactList" />
       <div style={listWrapper}>
       <Item.Group divided >
-      {this.props.data.contact.map(contact => (
+      {this.props.data.map(contact => (
           <Item key={contact.id}>
           <Item.Image src={contact.picture ? contact.picture: "/static/user_images/defaultUser.jpg"} />
           <Item.Content>

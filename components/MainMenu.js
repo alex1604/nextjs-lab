@@ -4,9 +4,39 @@ import Link from 'next/link'
 
 
 export default class MenuHorisontal extends Component {
-  state = { activeItem: 'all' }
+  constructor(props) {
+    super(props)
+}
+  state = {
+    activeItem: "all",
+    initialData: this.props.data,
+    searchValue: ""
+ }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+
+    this.filterData(name);
+    this.setState({ activeItem: name })
+  }
+
+  filterData = (name) => {
+    if (name === "all") {
+        this.props.update(this.state.initialData);
+        return;
+    }
+    let dataObject = this.state.initialData.filter( x => ( x.group === name) );
+    this.props.update(dataObject);
+  }
+
+  searchData = (dataList, searchTerm) => {
+    let newList = [];
+    dataList.forEach(x =>
+        Object.values(x).find( prop => prop.includes(searchTerm)) ?
+        newList.push(x) : null
+    );
+    this.props.update(newList);
+    this.setState({searchValue: searchTerm});
+  }
 
   render() {
     const { activeItem } = this.state
@@ -21,7 +51,11 @@ export default class MenuHorisontal extends Component {
           </Link>
 
           <Menu.Item style={{marginLeft: "3rem"}}>
-            <Input className='icon' icon='search' placeholder='Search...'/>
+            <Input
+              className='icon' icon='search'
+              placeholder='Search...'
+              value={this.state.searchValue}
+              onChange={ (e) => this.searchData(this.state.initialData, e.target.value)}/>
           </Menu.Item>
 
           <Menu.Item style={{marginLeft: "3rem"}}>
@@ -33,11 +67,14 @@ export default class MenuHorisontal extends Component {
             active={activeItem === 'all'}
             onClick={this.handleItemClick}
           />
-          <Menu.Item
-            name='family'
-            active={activeItem === 'family'}
-            onClick={this.handleItemClick}
-          />
+
+
+            <Menu.Item
+              name='family'
+              active={activeItem === 'family'}
+              onClick={this.handleItemClick}
+            />
+
           <Menu.Item
             name='friends'
             active={activeItem === 'friends'}
