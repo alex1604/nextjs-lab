@@ -37,8 +37,8 @@ MainMenu.getInitialProps = async function() {
   const res = await fetch('http://localhost:3000/api/simpleFilter/all')
   const data = await res.json()
 
-  console.log(`Show data fetched. Count: ${data.length}`);
-  console.log(data);
+  // console.log(`Show data fetched. Count: ${data.length}`);
+  // console.log(data);
 
   return {
     contact: data
