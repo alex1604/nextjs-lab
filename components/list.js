@@ -3,6 +3,7 @@ import Head from '../components/head'
 import MainMenu from '../components/MainMenu'
 import { Button, Icon, Image, Item, Label, Modal } from 'semantic-ui-react'
 import 'isomorphic-unfetch'
+import EditContact from './EditContact.js'
 
 const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
 const listWrapper = {
@@ -17,46 +18,63 @@ class ContactList extends Component{
   constructor(props) {
     super(props)
 }
-
-  state = { open: false }
+  state = { open: false, selectedContact: "", }
     open = () => this.setState({open: true })
     close = () => this.setState({ open: false })
 
+    selectContact = contactId => {
+		this.setState({ selectedContact: contactId });
+
+	}
+    // changeContact = (contact, newContactInfo)=> {
+    //   console.log(newContactInfo);
+    // }
   render(){
-    const {open} = this.state
-    // console.log("props ", this.props.deleteAction);
-    return (<div>
-      <Head title="ContactList" />
-      <div style={listWrapper}>
-      <Item.Group divided >
-      {this.props.data.contact.map(contact => (
+    const {open} = this.state;
+    const list = this.props.data.contact.map(contact => {
+      if(this.state.selectedContact === contact){
+        return (
+            <EditContact contact={contact} handleChange={this.changeContact} key={contact.id}/>
+        )
+      }else{
+
+        return(
           <Item key={contact.id}>
           <Item.Image src={contact.picture ? contact.picture: "/static/user_images/defaultUser.jpg"} />
           <Item.Content>
             <Item.Header>{contact.firstName} {contact.lastName}</Item.Header>
             <Item.Meta>
-              <span className='cinema'>{contact.group}</span>
-            </Item.Meta>
-            <Item.Description>
-              {contact.phone}
-              <br/>
-              {contact.email}
-            </Item.Description>
-            <Item.Extra>
-            <Button color="green" floated='right' icon labelPosition='left'>
-              Edit
-              <Icon name='edit' />
-            </Button>
-              <Button onClick={this.open} color="red" floated='right' icon labelPosition='left'>
-                Delete
-                <Icon name='trash alternate outline' />
-              </Button>
-              </Item.Extra>
-            </Item.Content>
+            <span className='cinema'>{contact.group}</span>
+          </Item.Meta>
+          <Item.Description>
+            {contact.phone}
+            <br/>
+            {contact.email}
+          </Item.Description>
+          <Item.Extra>
+          <Button color="green" onClick={event=>this.selectContact(contact)} floated='right' icon labelPosition='left'>
+            Edit
+            <Icon name='edit' />
+          </Button>
+          <Button onClick={this.open} color="red" floated='right' icon labelPosition='left'>
+          Delete
+          <Icon name='trash alternate outline' />
+          </Button>
+          </Item.Extra>
+          </Item.Content>
           </Item>
 
-        ))}
-        </Item.Group>
+        )
+      }
+    })
+    // console.log("props ", this.props.deleteAction);
+    return (
+      <div>
+        <Head title="ContactList" />
+        <div style={listWrapper}>
+          <Item.Group divided >
+            {list}
+          </Item.Group>
         </div>
 
       <Modal size="tiny" open={open} onClose={this.close}>
