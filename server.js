@@ -13,7 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true });
 const getContacts = require('./getContacts.js');
 const postContact = require('./postContact.js');
 const searchById = require('./searchById');
-const list = require('./contacts.json');
+let list = require('./contacts.json');
 
 app.prepare()
     .then(() => {
@@ -43,6 +43,20 @@ app.prepare()
         server.get('/api/simpleFilter/:function', (req, res) => {
             let group = req.params.function;
             res.send(getContacts.filter(group, list))
+        });
+
+        server.get('/api/delete', (req, res) => {
+          let deleteId = req.query.id;
+          list = list.filter( x =>  x.id !== deleteId );
+          let json = JSON.stringify(list);
+
+          fs.writeFile('./contacts.json',json,'utf8', (err)=> {
+            if (err) {
+                throw err
+            }
+            console.log("the file was deleted");
+          });
+          res.send(json);
         });
 
         server.post('/api/registerNewContact',
@@ -85,7 +99,7 @@ app.prepare()
                     //res.send(postContacts.procesPost(req, res, newContact, list));
                 }
             })
-        
+
             server.get('/api/editContact/:id', urlencodedParser,
                 (req, res) => {
                     console.log(req.params.id);

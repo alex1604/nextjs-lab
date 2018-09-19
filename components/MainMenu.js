@@ -7,39 +7,9 @@ export default class MenuHorisontal extends Component {
   constructor(props) {
     super(props)
 }
-  state = {
-    activeItem: "all",
-    initialData: this.props.data,
-    searchValue: ""
- }
-
-  handleItemClick = (e, { name }) => {
-
-    this.filterData(name);
-    this.setState({ activeItem: name })
-  }
-
-  filterData = (name) => {
-    if (name === "all") {
-        this.props.update(this.state.initialData);
-        return;
-    }
-    let dataObject = this.state.initialData.filter( x => ( x.group === name) );
-    this.props.update(dataObject);
-  }
-
-  searchData = (dataList, searchTerm) => {
-    let newList = [];
-    dataList.forEach(x =>
-        Object.values(x).find( prop => prop.includes(searchTerm)) ?
-        newList.push(x) : null
-    );
-    this.props.update(newList);
-    this.setState({searchValue: searchTerm});
-  }
 
   render() {
-    const { activeItem } = this.state
+    let activeItem  = this.props.activeFilter;
 
     return (
       <Segment inverted style={{borderRadius: "0"}}>
@@ -54,8 +24,8 @@ export default class MenuHorisontal extends Component {
             <Input
               className='icon' icon='search'
               placeholder='Search...'
-              value={this.state.searchValue}
-              onChange={ (e) => this.searchData(this.state.initialData, e.target.value)}/>
+              value={this.props.searchValue}
+              onChange={ (e) => this.props.searchData(this.props.data, e.target.value, this.props.activeFilter)}/>
           </Menu.Item>
 
           <Menu.Item style={{marginLeft: "3rem"}}>
@@ -65,20 +35,20 @@ export default class MenuHorisontal extends Component {
           <Menu.Item
             name='all'
             active={activeItem === 'all'}
-            onClick={this.handleItemClick}
+            onClick={this.props.handleItemClick}
           />
 
 
             <Menu.Item
               name='family'
               active={activeItem === 'family'}
-              onClick={this.handleItemClick}
+              onClick={this.props.handleItemClick}
             />
 
           <Menu.Item
             name='friends'
             active={activeItem === 'friends'}
-            onClick={this.handleItemClick}
+            onClick={this.props.handleItemClick}
           />
           <Link href="/create">
             <Menu.Item position='right'>
