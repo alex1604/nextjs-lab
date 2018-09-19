@@ -2,6 +2,10 @@ import React from 'react'
 import Head from '../components/head'
 import { Form, Button, Header, Icon, Label } from 'semantic-ui-react'
 import Link from 'next/link'
+import Checkbox from './checkbox'
+
+const newContact = require('../postContact').newContact;
+const write = require('../postContact').writeUser;
 
 const formStyle = {
   backgroundColor: "#f4f4f4",
@@ -21,19 +25,30 @@ class CreateContactForm extends React.Component{
         lastName:'',
         phone: '',
         email: '',
+        group:'friends',
         picture:'/static/user_images/defaultUser.jpg',
       }
   }
 
   saveContact = () => {
-      console.log(this.state);
+      // console.log(this.state);
+      // let newData = this.state;
+      // newContact(newData, list);
     //TODO callback to save data in json
   }
+  chooseGroup = (value)=> {
+    this.setState({group: value.value})
+  }
+
   render(){
 
   return(
   <div>
-  <Form encType='multipart/form-data' method='post' style={formStyle} >
+  <Form
+      encType='multipart/form-data'
+      method='post'
+      action='http://localhost:3000/api/registerNewContact'
+      style={formStyle} >
     <Head title="CreateContactForm" />
 
     <Header as='h2' dividing>
@@ -71,7 +86,7 @@ class CreateContactForm extends React.Component{
       <input
         type="file"
         id="triggerPhotoInput"
-        name="picture"
+        name="userPhoto"
         onChange={(e) => this.setState({picture:e.target.value})}
         style={{display: "none"}}/>
     </div>
@@ -100,11 +115,10 @@ class CreateContactForm extends React.Component{
         value={this.state.email}
         onChange={(e) => this.setState({email:e.target.value})}/>
     </Form.Field>
-
-
-    <Button type='submit' color='green' onClick={this.saveContact}>Submit</Button>
+    <Checkbox chooseGroup={this.chooseGroup}/>
+    <Button onClick={this.saveContact} type='submit' color='green'>Submit</Button>
     <Link href="index">
-    <Button basic color='red' onClick={()=> console.log("cancel")}>Cancel</Button>
+    <Button basic color='red'>Cancel</Button>
     </Link>
    </Form>
    </div>

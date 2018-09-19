@@ -51,7 +51,7 @@ app.prepare()
                 console.log(req);
                 let newUser = postContact.newContact(req.body,list);
                 let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
-
+                console.log(newUserId);
                 const tempPath = req.file.path;
                 const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
 
@@ -60,7 +60,6 @@ app.prepare()
                         if (err) return handleError(err, res);
 
                         newUser.picture = "./static/user_images/" + newUserId + ".jpg";
-                        console.log(newUser);
                         list.push(newUser);
                         postContact.writeUser(list);
 
@@ -85,7 +84,7 @@ app.prepare()
                     //res.send(postContacts.procesPost(req, res, newContact, list));
                 }
             })
-        
+
             server.get('/api/editContact/:id', urlencodedParser,
                 (req, res) => {
                     console.log(req.params.id);

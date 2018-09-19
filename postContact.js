@@ -16,7 +16,7 @@ module.exports = {
         return newObject;
     },
     writeUser: (list) => {
-        let data = JSON.stringify(list, null, 2);  
+        let data = JSON.stringify(list, null, 2);
         var options = {flags: 'w', encoding: 'utf-8'};
         fs.writeFileSync('./contacts.json', data, options);
     }
