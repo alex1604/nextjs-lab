@@ -9,7 +9,7 @@ import CreateContactForm from '../components/createContactForm'
 const Create = () => (
   <div>
     <Head title="Create" />
-    <MainMenu/>
+    <MainMenu menuTools={false}/>
     <CreateContactForm/>
   </div>
 )

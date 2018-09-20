@@ -38,11 +38,12 @@ class ContactList extends Component{
       if (res.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ' +
           res.status);
+          this.props.failedUpdate(true,false);
         return;
       }
       // Examine the text in the response
       res.json().then(data => {
-        this.props.update(data,this.props.activeFilter);
+        this.props.update(data,this.props.activeFilter, true, true);
         this.close();
       });
     })
