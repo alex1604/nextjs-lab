@@ -118,7 +118,7 @@ class CreateContactForm extends React.Component {
               value={this.state.email}
               onChange={(e) => this.setState({ email: e.target.value })} />
           </Form.Field>
-          <Checkbox chooseGroup={this.chooseGroup} />
+          <Checkbox chooseGroup={this.chooseGroup}/>
           <Button onClick={this.saveContact} type='submit' color='green'>Submit</Button>
           <Link href="index">
             <Button basic color='red'>Cancel</Button>
