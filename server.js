@@ -13,7 +13,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true });
 const getContacts = require('./getContacts.js');
 const postContact = require('./postContact.js');
 const searchById = require('./searchById');
-const list = require('./contacts.json');
+let list = require('./contacts.json');
+let listPath = './contacts.json'
 
 app.prepare()
     .then(() => {
@@ -29,6 +30,7 @@ app.prepare()
 
             // you might also want to set some limits: https://github.com/expressjs/multer#limits
 
+<<<<<<< HEAD
         });
         /*server.use((req, res, next) => {
 
@@ -36,6 +38,12 @@ app.prepare()
             next()
         })*/
 
+=======
+        /*server.use((req, res, next) => {
+            res.send('Hello, I am a server who has been called: ');
+            next()
+        })*/
+>>>>>>> develop
         server.get("/", express.static(path.join(__dirname, "./components")));
 
         server.get('/api/search', (req, res) => {
@@ -47,10 +55,27 @@ app.prepare()
             res.send(getContacts.filter(group, list))
         });
 
+        server.get('/api/delete', (req, res) => {
+            let deleteId = req.query.id;
+            list = list.filter( x =>  x.id !== deleteId );
+            let json = JSON.stringify(list, null, 2);
+  
+            fs.writeFile('./contacts.json',json,'utf8', (err)=> {
+              if (err) {
+                  throw err
+              }
+              console.log("the file was deleted");
+            });
+            res
+                .send(json)
+                .end();
+          });
+
         server.post('/api/registerNewContact',
             upload.single("userPhoto"), (req, res) => {
                 console.log(req);
                 let newUser = postContact.newContact(req.body, list);
+<<<<<<< HEAD
                 let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
                 if (req.file != undefined) {
                     const tempPath = req.file.path;
@@ -59,15 +84,35 @@ app.prepare()
                         fs.rename(tempPath, targetPath, err => {
                             if (err) return handleError(err, res);
 
+=======
+                let newUserId = newUser.firstName.replace(/ /g, '') + '' + newUser.lastName.replace(/ /g, '') + '' + newUser.id;
+                if (req.file != undefined) {
+                    const tempPath = req.file.path;
+                    const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
+
+                    if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+                        fs.rename(tempPath, targetPath, err => {
+                            if (err) return handleError(err, res);
+
+>>>>>>> develop
                             newUser.picture = "./static/user_images/" + newUserId + ".jpg";
                             console.log(newUser);
                             list.push(newUser);
                             postContact.writeUser(list);
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
                             // function that registers the rest of the data
                             res
                                 .status(200)
                                 .contentType("text/plain")
+<<<<<<< HEAD
                                 .end("New contact added");
+=======
+                                .redirect('../../index')
+                                .end();
+>>>>>>> develop
                         });
                     } else {
                         newUser.picture = "./static/user_images/defaultUser.jpg";
@@ -75,6 +120,10 @@ app.prepare()
                         postContacts.writeUser(list);
                         fs.unlink(tempPath, err => {
                             if (err) return handleError(err, res);
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
                             res
                                 .status(403)
                                 .contentType("text/plain")
@@ -83,6 +132,7 @@ app.prepare()
                         //res.send(postContacts.procesPost(req, res, newContact, list));
                     }
                 } else {
+<<<<<<< HEAD
                             newUser.picture = "./static/user_images/defaultUser.jpg";
                             console.log(newUser);
                             list.push(newUser);
@@ -94,13 +144,37 @@ app.prepare()
                                 .end("New contact added");
                     }
             })
+=======
+                    newUser.picture = "./static/user_images/defaultUser.jpg";
+                    console.log(newUser);
+                    list.push(newUser);
+                    postContact.writeUser(list);
+
+                    // function that registers the rest of the data
+                    res
+                        .status(200)
+                        .contentType("text/plain")
+                        .redirect('../../index')
+                        .end();
+
+                                    }
+            })
+
+>>>>>>> develop
         server.get('/api/editContact/:id', urlencodedParser,
             (req, res) => {
                 console.log(req.params.id);
                 //res.send(req.body);
                 let searchId = req.params.id;
                 let body = req.query;
+<<<<<<< HEAD
                 res.send(searchById.thisId(searchId, body, list));
+=======
+                searchById.thisId(searchId, body, list);
+                res
+                    .redirect('../../index')
+                    .end();
+>>>>>>> develop
             })
         server.get('*', (req, res) => {
             return handle(req, res)
