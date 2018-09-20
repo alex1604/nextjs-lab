@@ -15,7 +15,7 @@
     "phone": "0762082238",
     "email": "anna.faixova@gmail.com",
     "group": "friends",
-    "picture": "/static/user_images/kitten1.jpg"
+    "picture": "/static/user_images/AnnaFaixová1000002.jpg"
   },
   {
     "id": "1000003",
@@ -24,24 +24,24 @@
     "phone": "0762082239",
     "email": "elin.jakobson@gmail.com",
     "group": "friends",
-    "picture": "/static/user_images/kitten3.jpg"
+    "picture": "/static/user_images/ElinJakobsson1000003.jpg"
   },
   {
     "id": "1000004",
     "firstName": "Donald &",
     "lastName": "Trump",
     "phone": "012343210123",
-    "email": "donald.trump@gmail.com",
-    "group": "family",
+    "email": "donald.trump@usa.com",
+    "group": "friends",
     "picture": "static/user_images/kitten2.jpg"
   },
   {
-    "id": "1000005",
-    "firstName": "David",
-    "lastName": "Andersson",
-    "email": "david_good_teacher@gmail.com",
-    "phone": "DO NOT CALL ME ON MY FREE TIME",
+    "id": "1000004",
+    "firstName": "Rocket",
+    "lastName": "Man",
+    "phone": "0127639423",
+    "email": "kim.jong.un@korea.com",
     "group": "friends",
-    "picture": "./static/user_images/DavidAndersson1000005.jpg"
+    "picture": "static/user_images/kitten3.jpg"
   }
 ]

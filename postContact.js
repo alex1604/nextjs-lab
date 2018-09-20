@@ -2,6 +2,11 @@ const fs = require('fs');
 module.exports = {
     newContact: (object, list) => {
         let newUserNumericValue = 1000000 + (list.length + 1);
+        list.forEach(x => {
+            if (x.id == newUserNumericValue){
+                newUserNumericValue += 20000;
+            }
+        })
         //let newUserUniqueId = object.firstName.replace(' ', '%20') + object.lastName.replace(' ', '%20') + newUserNumericValue.toString();
         object["id"] = newUserNumericValue.toString();
         let newObject = {

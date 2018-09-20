@@ -48,19 +48,19 @@ app.prepare()
 
         server.get('/api/delete', (req, res) => {
             let deleteId = req.query.id;
-            list = list.filter( x =>  x.id !== deleteId );
+            list = list.filter(x => x.id !== deleteId);
             let json = JSON.stringify(list, null, 2);
-  
-            fs.writeFile('./contacts.json',json,'utf8', (err)=> {
-              if (err) {
-                  throw err
-              }
-              console.log("the file was deleted");
+
+            fs.writeFile('./contacts.json', json, 'utf8', (err) => {
+                if (err) {
+                    throw err
+                }
+                console.log("the file was deleted");
             });
             res
                 .send(json)
                 .end();
-          });
+        });
 
         server.post('/api/registerNewContact',
 
@@ -86,7 +86,7 @@ app.prepare()
                                 .status(200)
                                 .contentType("text/plain")
                                 .redirect('../../index')
-                                .end();
+                                
                         });
                     } else {
                         newUser.picture = "./static/user_images/defaultUser.jpg";
@@ -113,9 +113,9 @@ app.prepare()
                         .status(200)
                         .contentType("text/plain")
                         .redirect('../../index')
-                        .end();
+                        //.end();
 
-                                    }
+                }
             })
 
         server.get('/api/editContact/:id', urlencodedParser,
