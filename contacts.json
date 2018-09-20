@@ -28,20 +28,38 @@
   },
   {
     "id": "1000004",
-    "firstName": "Donald &",
-    "lastName": "Trump",
-    "phone": "012343210123",
-    "email": "donald.trump@usa.com",
+    "firstName": "Lisa",
+    "lastName": "Lokatt",
+    "phone": "87631723726183",
+    "email": "email@mail.com",
     "group": "friends",
     "picture": "static/user_images/kitten2.jpg"
   },
   {
-    "id": "1000004",
+    "id": "1000005",
     "firstName": "Rocket",
     "lastName": "Man",
     "phone": "0127639423",
     "email": "kim.jong.un@korea.com",
     "group": "friends",
     "picture": "static/user_images/kitten3.jpg"
+  },
+  {
+    "id": "1000006",
+    "firstName": "malin",
+    "lastName": "jansson",
+    "email": "email@mail.com",
+    "phone": "87631723726183",
+    "group": "family",
+    "picture": "./static/user_images/malinjansson1000006.jpg"
+  },
+  {
+    "id": "1000007",
+    "firstName": "jakob",
+    "lastName": "alterbo",
+    "email": "email@mail.com",
+    "phone": "87631723726183",
+    "group": "family",
+    "picture": "./static/user_images/defaultUser.jpg"
   }
 ]

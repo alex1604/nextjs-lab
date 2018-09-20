@@ -30,7 +30,7 @@ class ContactList extends Component {
 
   selectContact = contactId => {
     this.setState({ selectedContact: contactId });
-    console.log(contactId);
+    // console.log(contactId);
   }
   deleteItem = (id) => {
     fetch(this.props.url +"/api/delete?id=" + id)
@@ -46,7 +46,10 @@ class ContactList extends Component {
         this.props.update(data,this.props.activeFilter, true, true);
         this.close();
       });
-  }
+  }).catch(err => {
+        console.log('Fetch Error :-S', err);
+      });
+}
   cancelEdit = () => {
     this.setState({ selectedContact: "" });
   }
@@ -55,7 +58,7 @@ class ContactList extends Component {
     console.log(newContactInfo);
   }
   render() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     const { open } = this.state;
     let list = this.props.data.map(contact => {
       if (this.state.selectedContact === contact) {
