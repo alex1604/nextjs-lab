@@ -13,7 +13,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true });
 const getContacts = require('./getContacts.js');
 const postContact = require('./postContact.js');
 const searchById = require('./searchById');
-let list = require('./contacts.json');
+const list = require('./contacts.json');
+let listPath = './contacts.json'
 
 app.prepare()
     .then(() => {
@@ -47,10 +48,10 @@ app.prepare()
 
         server.get('/api/delete', (req, res) => {
           let deleteId = req.query.id;
-          list = list.filter( x =>  x.id !== deleteId );
-          let json = JSON.stringify(list);
+          newList = list.filter( x =>  x.id !== deleteId );
+          let json = JSON.stringify(newList, null, 2);
 
-          fs.writeFile('./contacts.json',json,'utf8', (err)=> {
+          fs.writeFile(listPath,json,'utf8', (err)=> {
             if (err) {
                 throw err
             }
