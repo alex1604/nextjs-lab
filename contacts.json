@@ -17,15 +17,6 @@
     "picture": "/static/user_images/kitten1.jpg"
   },
   {
-    "id": "1000003",
-    "firstName": "Elin",
-    "lastName": "Jakobsson",
-    "phone": "0762082239",
-    "email": "elin.jakobson@gmail.com",
-    "group": "friends",
-    "picture": "/static/user_images/kitten3.jpg"
-  },
-  {
     "id": "1000004",
     "firstName": "Donald &",
     "lastName": "Trump",

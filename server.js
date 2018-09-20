@@ -48,16 +48,8 @@ app.prepare()
 
         server.get('/api/delete', (req, res) => {
           let deleteId = req.query.id;
-          newList = list.filter( x =>  x.id !== deleteId );
-          let json = JSON.stringify(newList, null, 2);
+          postContact.writeUser(list.filter( x =>  x.id != deleteId ))
 
-          fs.writeFile(listPath,json,'utf8', (err)=> {
-            if (err) {
-                throw err
-            }
-            console.log("the file was deleted");
-          });
-          res.send(json);
         });
 
         server.post('/api/registerNewContact',
@@ -65,7 +57,7 @@ app.prepare()
             upload.single("userPhoto"), (req, res) => {
                 console.log(req);
                 let newUser = postContact.newContact(req.body, list);
-                let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
+                let newUserId = newUser.firstName.replace(/ /g, '') + '' + newUser.lastName.replace(/ /g, '') + '' + newUser.id;
                 if (req.file != undefined) {
                     const tempPath = req.file.path;
                     const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
@@ -83,7 +75,8 @@ app.prepare()
                             res
                                 .status(200)
                                 .contentType("text/plain")
-                                .end("New contact added");
+                                //.end("New contact added");
+                                .redirect('http://localhost:3000/index')
                         });
                     } else {
                         newUser.picture = "./static/user_images/defaultUser.jpg";
@@ -109,7 +102,8 @@ app.prepare()
                     res
                         .status(200)
                         .contentType("text/plain")
-                        .end("New contact added");
+                        //.end("New contact added")
+                        .redirect('http://localhost:3000/index')
 
                                     }
             })
