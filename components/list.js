@@ -30,26 +30,26 @@ class ContactList extends Component {
 
   selectContact = contactId => {
     this.setState({ selectedContact: contactId });
-    console.log(contactId);
+    // console.log(contactId);
   }
   deleteItem = (id) => {
-    fetch(this.props.url + "/api/delete?id=" + id)
-      .then(res => {
-        if (res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        // Examine the text in the response
-        res.json().then(data => {
-          this.props.update(data, this.props.activeFilter);
-          this.close();
-        });
-      })
-      .catch(err => {
+    fetch(this.props.url +"/api/delete?id=" + id)
+    .then(res => {
+      if (res.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          res.status);
+          this.props.failedUpdate(true,false);
+        return;
+      }
+      // Examine the text in the response
+      res.json().then(data => {
+        this.props.update(data,this.props.activeFilter, true, true);
+        this.close();
+      });
+  }).catch(err => {
         console.log('Fetch Error :-S', err);
       });
-  }
+}
   cancelEdit = () => {
     this.setState({ selectedContact: "" });
   }
@@ -58,7 +58,7 @@ class ContactList extends Component {
     console.log(newContactInfo);
   }
   render() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     const { open } = this.state;
     let list = this.props.data.map(contact => {
       if (this.state.selectedContact === contact) {

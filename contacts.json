@@ -37,22 +37,20 @@
   },
   {
     "id": "1000005",
-<<<<<<< HEAD
-    "firstName": "Kim-Jong",
-    "lastName": "Un",
-    "phone": "0762082241",
-    "email": "kim.kom.kung@gmail.com",
-    "group": "family",
-    "picture": "static/user_images/kitten4.jpg"
-  },
-]
-=======
-    "firstName": "David",
+    "firstName": "Dave",
     "lastName": "Andersson",
     "email": "david_good_teacher@gmail.com",
     "phone": "DO NOT CALL ME ON MY FREE TIME",
     "group": "friends",
     "picture": "./static/user_images/DavidAndersson1000005.jpg"
+  },
+  {
+    "id": "1000006",
+    "firstName": "Anna",
+    "lastName": "Faixová",
+    "email": "rn@gmail.com",
+    "phone": "728326843",
+    "group": "family",
+    "picture": "./static/user_images/AnnaFaixová1000006.jpg"
   }
 ]
->>>>>>> develop
