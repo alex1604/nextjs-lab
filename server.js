@@ -13,7 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true });
 const getContacts = require('./getContacts.js');
 const postContact = require('./postContact.js');
 const searchById = require('./searchById');
-const list = require('./contacts.json');
+let list = require('./contacts.json');
 let listPath = './contacts.json'
 
 app.prepare()
@@ -47,10 +47,20 @@ app.prepare()
         });
 
         server.get('/api/delete', (req, res) => {
-          let deleteId = req.query.id;
-          postContact.writeUser(list.filter( x =>  x.id != deleteId ))
-
-        });
+            let deleteId = req.query.id;
+            list = list.filter( x =>  x.id !== deleteId );
+            let json = JSON.stringify(list, null, 2);
+  
+            fs.writeFile('./contacts.json',json,'utf8', (err)=> {
+              if (err) {
+                  throw err
+              }
+              console.log("the file was deleted");
+            });
+            res
+                .send(json)
+                .end();
+          });
 
         server.post('/api/registerNewContact',
 
@@ -75,8 +85,8 @@ app.prepare()
                             res
                                 .status(200)
                                 .contentType("text/plain")
-                                //.end("New contact added");
-                                .redirect('http://localhost:3000/index')
+                                .redirect('../../index')
+                                .end();
                         });
                     } else {
                         newUser.picture = "./static/user_images/defaultUser.jpg";
@@ -102,8 +112,8 @@ app.prepare()
                     res
                         .status(200)
                         .contentType("text/plain")
-                        //.end("New contact added")
-                        .redirect('http://localhost:3000/index')
+                        .redirect('../../index')
+                        .end();
 
                                     }
             })
@@ -114,7 +124,10 @@ app.prepare()
                 //res.send(req.body);
                 let searchId = req.params.id;
                 let body = req.query;
-                res.send(searchById.thisId(searchId, body, list));
+                searchById.thisId(searchId, body, list);
+                res
+                    .redirect('../../index')
+                    .end();
             })
 
         server.get('*', (req, res) => {
