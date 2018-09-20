@@ -21,6 +21,7 @@ class EditContact extends React.Component {
       editLastName:'',
       editPhone:'',
       editEmail:'',
+      url: 'http://localhost:3000/api/editContact/' + this.props.contact.id,
     }
   }
   sendEditContact = event =>{
@@ -31,25 +32,29 @@ class EditContact extends React.Component {
     return (
       <Item key={this.props.contact.id}>
       <Item.Image src={this.props.contact.picture} />
-      <Form>
+      <Form action={this.state.url} method='get'>
       <Item.Content>
         <Item.Header >
         <Form.Field>
           <input type="text"
+            name='firstName'
             placeholder={this.props.contact.firstName}
             onChange={event => this.setState({editFirstName: event.target.value}) } />
         </Form.Field>
         <Form.Field>
           <input type="text"
+            name='lastName'
             placeholder={this.props.contact.lastName}
             onChange={event => this.setState({editLastName: event.target.value}) }/>
         </Form.Field>
         <Form.Field>
           <input type="text"
+            name='phone'
             placeholder={this.props.contact.phone}
             onChange={event => this.setState({editPhone: event.target.value}) }/>
         </Form.Field>
-        <input type="text"
+        <input type="email"
+          name='email'
           placeholder={this.props.contact.email}
           onChange={event => this.setState({editEmail: event.target.value}) }/>
         </Item.Header>
@@ -57,11 +62,11 @@ class EditContact extends React.Component {
         <span className='cinema'>{this.props.contact.group}</span>
       </Item.Meta>
       <Item.Extra>
-      <Button onClick={this.sendEditContact} color="green" floated='right' icon labelPosition='left'>
+      <Button type='submit' color="green" floated='right' icon labelPosition='left'>
         Save
-        <Icon name='save' />
+      <Icon name='save' />
       </Button>
-      <Button className="ui negative basic button" floated='right' icon labelPosition='left'>
+      <Button type='button' onClick={this.props.cancel} className="ui negative basic button" floated='right' icon labelPosition='left'>
         Cancel
       <Icon name='cancel' />
       </Button>
