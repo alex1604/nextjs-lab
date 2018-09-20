@@ -33,21 +33,18 @@ class ContactList extends Component {
     console.log(contactId);
   }
   deleteItem = (id) => {
-    fetch(this.props.url + "/api/delete?id=" + id)
-      .then(res => {
-        if (res.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-            res.status);
-          return;
-        }
-        // Examine the text in the response
-        res.json().then(data => {
-          this.props.update(data, this.props.activeFilter);
-          this.close();
-        });
-      })
-      .catch(err => {
-        console.log('Fetch Error :-S', err);
+    fetch(this.props.url +"/api/delete?id=" + id)
+    .then(res => {
+      if (res.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' +
+          res.status);
+          this.props.failedUpdate(true,false);
+        return;
+      }
+      // Examine the text in the response
+      res.json().then(data => {
+        this.props.update(data,this.props.activeFilter, true, true);
+        this.close();
       });
   }
   cancelEdit = () => {
