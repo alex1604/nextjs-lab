@@ -19,86 +19,92 @@ app.prepare()
     .then(() => {
         const handleError = (err, res) => {
             res
-              .status(500)
-              .contentType("text/plain")
-              .end("Oops! Something went wrong! ", err);
-          };
+                .status(500)
+                .contentType("text/plain")
+                .end("Oops! Something went wrong! ", err);
+        };
         const server = express()
         const upload = multer({
             dest: "./temp"
-            // you might also want to set some limits: https://github.com/expressjs/multer#limits
-        });
 
+            // you might also want to set some limits: https://github.com/expressjs/multer#limits
+
+        });
         /*server.use((req, res, next) => {
+
             res.send('Hello, I am a server who has been called: ');
             next()
         })*/
+
         server.get("/", express.static(path.join(__dirname, "./components")));
 
         server.get('/api/search', (req, res) => {
             let searchTerm = req.query.q;
             res.send(getContacts.search(searchTerm, list));
         })
-
         server.get('/api/simpleFilter/:function', (req, res) => {
             let group = req.params.function;
             res.send(getContacts.filter(group, list))
         });
 
         server.post('/api/registerNewContact',
-
             upload.single("userPhoto"), (req, res) => {
                 console.log(req);
-                let newUser = postContact.newContact(req.body,list);
+                let newUser = postContact.newContact(req.body, list);
                 let newUserId = newUser.firstName.replace(/ /g, '%20') + '%20' + newUser.lastName.replace(/ /g, '%20') + '%20' + newUser.id;
-                console.log(newUserId);
-                const tempPath = req.file.path;
-                const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
+                if (req.file != undefined) {
+                    const tempPath = req.file.path;
+                    const targetPath = path.join(__dirname, "./static/user_images/" + newUserId + ".jpg");
+                    if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+                        fs.rename(tempPath, targetPath, err => {
+                            if (err) return handleError(err, res);
 
-                if (path.extname(req.file.originalname).toLowerCase() === ".jpg") {
-                    fs.rename(tempPath, targetPath, err => {
-                        if (err) return handleError(err, res);
-
-                        newUser.picture = "./static/user_images/" + newUserId + ".jpg";
+                            newUser.picture = "./static/user_images/" + newUserId + ".jpg";
+                            console.log(newUser);
+                            list.push(newUser);
+                            postContact.writeUser(list);
+                            // function that registers the rest of the data
+                            res
+                                .status(200)
+                                .contentType("text/plain")
+                                .end("New contact added");
+                        });
+                    } else {
+                        newUser.picture = "./static/user_images/defaultUser.jpg";
                         list.push(newUser);
-                        postContact.writeUser(list);
-
-                        // function that registers the rest of the data
-                        res
-                            .status(200)
-                            .contentType("text/plain")
-                            .end("New contact added");
-                    });
+                        postContacts.writeUser(list);
+                        fs.unlink(tempPath, err => {
+                            if (err) return handleError(err, res);
+                            res
+                                .status(403)
+                                .contentType("text/plain")
+                                .end("Only .jpg files are allowed!");
+                        });
+                        //res.send(postContacts.procesPost(req, res, newContact, list));
+                    }
                 } else {
-                    newUser.picture = "./static/user_images/defaultUser.jpg";
-                    list.push(newUser);
-                    postContacts.writeUser(list);
-                    fs.unlink(tempPath, err => {
-                        if (err) return handleError(err, res);
-
-                        res
-                            .status(403)
-                            .contentType("text/plain")
-                            .end("Only .jpg files are allowed!");
-                    });
-                    //res.send(postContacts.procesPost(req, res, newContact, list));
-                }
+                            newUser.picture = "./static/user_images/defaultUser.jpg";
+                            console.log(newUser);
+                            list.push(newUser);
+                            postContact.writeUser(list);
+                            // function that registers the rest of the data
+                            res
+                                .status(200)
+                                .contentType("text/plain")
+                                .end("New contact added");
+                    }
             })
-
-            server.get('/api/editContact/:id', urlencodedParser,
-                (req, res) => {
-                    console.log(req.params.id);
-                    //res.send(req.body);
-                    let searchId = req.params.id;
-                    let body = req.query;
-                    res.send(searchById.thisId(searchId, body, list));
+        server.get('/api/editContact/:id', urlencodedParser,
+            (req, res) => {
+                console.log(req.params.id);
+                //res.send(req.body);
+                let searchId = req.params.id;
+                let body = req.query;
+                res.send(searchById.thisId(searchId, body, list));
             })
-
         server.get('*', (req, res) => {
             return handle(req, res)
-
         })
-
         const port = 3000;
         server.listen(port, (err) => {
             if (err) throw err

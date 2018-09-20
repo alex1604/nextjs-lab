@@ -4,9 +4,6 @@ import { Form, Button, Header, Icon, Label } from 'semantic-ui-react'
 import Link from 'next/link'
 import Checkbox from './checkbox'
 
-const newContact = require('../postContact').newContact;
-const write = require('../postContact').writeUser;
-
 const formStyle = {
   backgroundColor: "#f4f4f4",
   borderRadius: "10px",
@@ -30,27 +27,19 @@ class CreateContactForm extends React.Component{
       }
   }
 
-  saveContact = () => {
-      // console.log(this.state);
-      // let newData = this.state;
-      // newContact(newData, list);
+  saveContact = () =>{
     //TODO callback to save data in json
-  }
+
+  };
   chooseGroup = (value)=> {
+    console.log(value.value);
     this.setState({group: value.value})
-  }
-
+  };
   render(){
-
   return(
   <div>
-  <Form
-      encType='multipart/form-data'
-      method='post'
-      action='http://localhost:3000/api/registerNewContact'
-      style={formStyle} >
+  <Form encType='multipart/form-data' method='post' style={formStyle} action='http://localhost:3000/api/registerNewContact' >
     <Head title="CreateContactForm" />
-
     <Header as='h2' dividing>
       <Icon name='phone' />
       <Header.Content>
@@ -58,7 +47,6 @@ class CreateContactForm extends React.Component{
         <Header.Subheader>Add and save your new contact here</Header.Subheader>
       </Header.Content>
     </Header>
-
     <Form.Field>
       <label>First name</label>
       <input
@@ -67,7 +55,6 @@ class CreateContactForm extends React.Component{
         value={this.state.firstName}
         onChange={(e) => this.setState({firstName:e.target.value})}/>
     </Form.Field>
-
     <Form.Field>
       <label>Lastname</label>
       <input
@@ -76,7 +63,6 @@ class CreateContactForm extends React.Component{
         value={this.state.lastName}
         onChange={(e) => this.setState({lastName:e.target.value})}/>
     </Form.Field>
-
     <div style={{margin:"2rem 0 0 0"}}>
       <label
         htmlFor="triggerPhotoInput"
@@ -91,13 +77,11 @@ class CreateContactForm extends React.Component{
         style={{display: "none"}}/>
     </div>
     <p style={{margin:"2rem 0 0 0"}}> {this.state.picture}</p>
-
     <br/>
     <Header as='h3' dividing>
       Contact information
     </Header>
     <br/>
-
     <Form.Field>
       <label>Phone number</label>
       <input
@@ -106,7 +90,6 @@ class CreateContactForm extends React.Component{
         value={this.state.phone}
         onChange={(e) => this.setState({phone:e.target.value})}/>
     </Form.Field>
-
     <Form.Field>
       <label>Email</label>
       <input
@@ -114,15 +97,17 @@ class CreateContactForm extends React.Component{
         name="email"
         value={this.state.email}
         onChange={(e) => this.setState({email:e.target.value})}/>
-    </Form.Field>
-    <Checkbox chooseGroup={this.chooseGroup}/>
-    <Button onClick={this.saveContact} type='submit' color='green'>Submit</Button>
-    <Link href="index">
-    <Button basic color='red'>Cancel</Button>
-    </Link>
-   </Form>
+      </Form.Field>
+      <Checkbox chooseGroup={this.chooseGroup}/>
+      <Button type='submit' color='green'>Submit</Button>
+      <Link href="index">
+        <Button basic color='red' >Cancel</Button>
+      </Link>
+    </Form>
    </div>
- )
-}
+  )
+  }
+
 };
+
 export default CreateContactForm;
