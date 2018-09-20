@@ -17,7 +17,7 @@ export default class CheckboxRadioGroup extends Component {
           <Checkbox
             radio
             label='family'
-            name='checkboxRadioGroup'
+            name='group'
             value='family'
             checked={this.state.value === 'family'}
             onChange={this.handleChange}
@@ -28,7 +28,7 @@ export default class CheckboxRadioGroup extends Component {
             radio
             checked={this.state.value === 'friends'}
             label='friends'
-            name='checkboxRadioGroup'
+            name='group'
             value='friends'
             onChange={this.handleChange}
           />
